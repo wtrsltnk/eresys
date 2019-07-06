@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DxControls.cs" />
     <Compile Include="DxGraphics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\Eresys.Graphics\Eresys.Graphics.csproj">
       <Project>{0cb70984-6883-46b0-a11e-f6b791801c22}</Project>
       <Name>Eresys.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eresys.Kernel\Eresys.Kernel.csproj">
+      <Project>{675b1f0c-6914-4c6d-9921-61b9f1aa6e97}</Project>
+      <Name>Eresys.Kernel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eresys.Math\Eresys.Math.csproj">
       <Project>{489ad58c-f8c1-4a93-bcca-1bd8cf42ae52}</Project>
