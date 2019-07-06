@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Kernel", "Eresys.Kernel\Eresys.Kernel.csproj", "{675B1F0C-6914-4C6D-9921-61B9F1AA6E97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Math", "Eresys.Math\Eresys.Math.csproj", "{489AD58C-F8C1-4A93-BCCA-1BD8CF42AE52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Scene", "Eresys.Scene\Eresys.Scene.csproj", "{F1254B7B-B75F-4E2B-9FBA-2D43128E9770}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Practises", "Eresys.Practises\Eresys.Practises.csproj", "{E9163B1A-190F-4476-B3AA-7C8935286C83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Extra", "Eresys.Extra\Eresys.Extra.csproj", "{FA5EE17E-D17D-424E-AAAE-B0382A940F83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics", "Eresys.Graphics\Eresys.Graphics.csproj", "{0CB70984-6883-46B0-A11E-F6B791801C22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{675B1F0C-6914-4C6D-9921-61B9F1AA6E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675B1F0C-6914-4C6D-9921-61B9F1AA6E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675B1F0C-6914-4C6D-9921-61B9F1AA6E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675B1F0C-6914-4C6D-9921-61B9F1AA6E97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{489AD58C-F8C1-4A93-BCCA-1BD8CF42AE52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{489AD58C-F8C1-4A93-BCCA-1BD8CF42AE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{489AD58C-F8C1-4A93-BCCA-1BD8CF42AE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{489AD58C-F8C1-4A93-BCCA-1BD8CF42AE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1254B7B-B75F-4E2B-9FBA-2D43128E9770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1254B7B-B75F-4E2B-9FBA-2D43128E9770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1254B7B-B75F-4E2B-9FBA-2D43128E9770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1254B7B-B75F-4E2B-9FBA-2D43128E9770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9163B1A-190F-4476-B3AA-7C8935286C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9163B1A-190F-4476-B3AA-7C8935286C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9163B1A-190F-4476-B3AA-7C8935286C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9163B1A-190F-4476-B3AA-7C8935286C83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA5EE17E-D17D-424E-AAAE-B0382A940F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA5EE17E-D17D-424E-AAAE-B0382A940F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA5EE17E-D17D-424E-AAAE-B0382A940F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA5EE17E-D17D-424E-AAAE-B0382A940F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CB70984-6883-46B0-A11E-F6B791801C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB70984-6883-46B0-A11E-F6B791801C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB70984-6883-46B0-A11E-F6B791801C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB70984-6883-46B0-A11E-F6B791801C22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DE846FFE-3C34-4161-8370-CADDC6CF25D7}
+	EndGlobalSection
+EndGlobal

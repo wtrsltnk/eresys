@@ -1,307 +1,218 @@
-<VisualStudioProject>
-    <CSHARP
-        ProjectType = "Local"
-        ProductVersion = "7.10.3077"
-        SchemaVersion = "2.0"
-        ProjectGuid = "{5AB40B34-E8CF-4897-850E-DA0C196FCD6B}"
-    >
-        <Build>
-            <Settings
-                ApplicationIcon = "Eresys.ico"
-                AssemblyKeyContainerName = ""
-                AssemblyName = "Eresys"
-                AssemblyOriginatorKeyFile = ""
-                DefaultClientScript = "JScript"
-                DefaultHTMLPageLayout = "Grid"
-                DefaultTargetSchema = "IE50"
-                DelaySign = "false"
-                OutputType = "WinExe"
-                PreBuildEvent = ""
-                PostBuildEvent = ""
-                RootNamespace = "Eresys"
-                RunPostBuildEvent = "OnBuildSuccess"
-                StartupObject = ""
-            >
-                <Config
-                    Name = "Debug"
-                    AllowUnsafeBlocks = "true"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "false"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = "DEBUG;TRACE"
-                    DocumentationFile = ""
-                    DebugSymbols = "true"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "false"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "false"
-                    OutputPath = "bin\Debug\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "4"
-                />
-                <Config
-                    Name = "Release"
-                    AllowUnsafeBlocks = "true"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "false"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = "TRACE"
-                    DocumentationFile = ""
-                    DebugSymbols = "false"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "false"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "true"
-                    OutputPath = "bin\Release\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "4"
-                />
-            </Settings>
-            <References>
-                <Reference
-                    Name = "System"
-                    AssemblyName = "System"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll"
-                />
-                <Reference
-                    Name = "System.Data"
-                    AssemblyName = "System.Data"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
-                />
-                <Reference
-                    Name = "System.Drawing"
-                    AssemblyName = "System.Drawing"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
-                />
-                <Reference
-                    Name = "System.Windows.Forms"
-                    AssemblyName = "System.Windows.Forms"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Windows.Forms.dll"
-                />
-                <Reference
-                    Name = "System.XML"
-                    AssemblyName = "System.Xml"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
-                />
-                <Reference
-                    Name = "System.Management"
-                    AssemblyName = "System.Management"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Management.dll"
-                />
-                <Reference
-                    Name = "Microsoft.DirectX"
-                    AssemblyName = "Microsoft.DirectX"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.dll"
-                    AssemblyFolderKey = "hklm\dn\current managed directx 9.1"
-                />
-                <Reference
-                    Name = "Microsoft.DirectX.Direct3D"
-                    AssemblyName = "Microsoft.DirectX.Direct3D"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.Direct3D.dll"
-                    AssemblyFolderKey = "hklm\dn\current managed directx 9.1"
-                />
-                <Reference
-                    Name = "Microsoft.DirectX.DirectInput"
-                    AssemblyName = "Microsoft.DirectX.DirectInput"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.DirectInput.dll"
-                    AssemblyFolderKey = "hklm\dn\current managed directx 9.1"
-                />
-                <Reference
-                    Name = "Microsoft.DirectX.Direct3DX"
-                    AssemblyName = "Microsoft.DirectX.Direct3DX"
-                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.Direct3DX.dll"
-                    AssemblyFolderKey = "hklm\dn\current managed directx 9.1"
-                />
-            </References>
-        </Build>
-        <Files>
-            <Include>
-                <File
-                    RelPath = "app.config"
-                    BuildAction = "None"
-                />
-                <File
-                    RelPath = "Application.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "AssemblyInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Eresys.ico"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Controls\Button.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Controls\DXControls.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Controls\IControls.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Controls\MouseButton.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Extra\HLBSPMap.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Extra\SkyBox.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Extra\Wad.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Graphics\Color.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Graphics\DXGraphics.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Graphics\IGraphics.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Graphics\Texture.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Graphics\Vertex.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Graphics\VertexPool.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\IApplication.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\Ini.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\Kernel.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\Log.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\Profiler.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\Settings.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\SystemInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Kernel\Timer.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Math\Line.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Math\Matrix.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Math\Plane.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Math\Point2D.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Math\Point3D.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Math\Vector.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Scene\Camera.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Scene\Collision.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Scene\Player.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Scene\Scene.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Scene\SceneObject.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-            </Include>
-        </Files>
-    </CSHARP>
-</VisualStudioProject>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>7.10.3077</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5AB40B34-E8CF-4897-850E-DA0C196FCD6B}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>Eresys.ico</ApplicationIcon>
+    <AssemblyKeyContainerName />
+    <AssemblyName>Eresys</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Eresys</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>D:\Misc\Code\dotnet\eresys\src\Backup\</UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.DirectX">
+      <Name>Microsoft.DirectX</Name>
+      <HintPath>..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\current managed directx 9.1</AssemblyFolderKey>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3D">
+      <Name>Microsoft.DirectX.Direct3D</Name>
+      <HintPath>..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.Direct3D.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\current managed directx 9.1</AssemblyFolderKey>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3DX">
+      <Name>Microsoft.DirectX.Direct3DX</Name>
+      <HintPath>..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.Direct3DX.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\current managed directx 9.1</AssemblyFolderKey>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.DirectInput">
+      <Name>Microsoft.DirectX.DirectInput</Name>
+      <HintPath>..\..\..\..\..\..\WINDOWS\Microsoft.NET\Managed DirectX\v9.00.1126\Microsoft.DirectX.DirectInput.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\current managed directx 9.1</AssemblyFolderKey>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Management">
+      <Name>System.Management</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\Button.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\DXControls.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\IControls.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\MouseButton.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\HLBSPMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\SkyBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\Wad.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\Color.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\DXGraphics.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\IGraphics.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\Texture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\Vertex.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Graphics\VertexPool.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\IApplication.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\Ini.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\Kernel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\Log.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\Profiler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\Settings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\SystemInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Kernel\Timer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Math\Line.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Math\Matrix.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Math\Plane.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Math\Point2D.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Math\Point3D.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Math\Vector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scene\Camera.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scene\Collision.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scene\Player.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scene\Scene.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scene\SceneObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Eresys.ico" />
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>
