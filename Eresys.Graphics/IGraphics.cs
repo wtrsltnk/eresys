@@ -1,5 +1,6 @@
 
 using Eresys.Math;
+using System;
 
 namespace Eresys
 {
@@ -11,6 +12,12 @@ namespace Eresys
     /// </summary>
     public interface IGraphics : System.IDisposable
     {
+        event EventHandler Activated;
+
+        event EventHandler Deactivate;
+
+        event EventHandler Closed;
+
         /// <summary>
         /// Wire frame mode rendering (standaard uit)
         /// </summary>
@@ -46,6 +53,8 @@ namespace Eresys
         float Gamma { get; set; }
 
         bool FrameClearing { get; set; }
+
+        void Startup();
 
         /// <summary>
         /// Voegt een vertex pool toe. Deze kan dan worden gebruikt bij het renderen. Dit heeft intern als gevolg dat de

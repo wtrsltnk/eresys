@@ -4,9 +4,9 @@ namespace Eresys.Practises.Profiling
 {
     public class NullProfiler : IProfiler
     {
-        public void StartSample(string name)
+        public ProfilerSample StartSample(string name)
         {
-            // This is a null profiler
+            return new ProfilerSample(this);
         }
 
         public void StopSample()

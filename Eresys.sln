@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics.OpenGL", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics.DirectX", "Eresys.Graphics.DirectX\Eresys.Graphics.DirectX.csproj", "{6C010089-1805-41B9-B120-892D73A6F7FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Controls", "Eresys.Controls\Eresys.Controls.csproj", "{658C338F-C8F6-4893-867B-341A87A4B970}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Runner", "Eresys.Runner\Eresys.Runner.csproj", "{4FF0A2A9-3B72-4180-BE82-505FD68CBA03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,14 @@ Global
 		{6C010089-1805-41B9-B120-892D73A6F7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C010089-1805-41B9-B120-892D73A6F7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C010089-1805-41B9-B120-892D73A6F7FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658C338F-C8F6-4893-867B-341A87A4B970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658C338F-C8F6-4893-867B-341A87A4B970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658C338F-C8F6-4893-867B-341A87A4B970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658C338F-C8F6-4893-867B-341A87A4B970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FF0A2A9-3B72-4180-BE82-505FD68CBA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF0A2A9-3B72-4180-BE82-505FD68CBA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF0A2A9-3B72-4180-BE82-505FD68CBA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF0A2A9-3B72-4180-BE82-505FD68CBA03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

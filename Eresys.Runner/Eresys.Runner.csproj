@@ -4,17 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA5EE17E-D17D-424E-AAAE-B0382A940F83}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eresys.Extra</RootNamespace>
-    <AssemblyName>Eresys.Extra</AssemblyName>
+    <ProjectGuid>{4FF0A2A9-3B72-4180-BE82-505FD68CBA03}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Eresys.Runner</RootNamespace>
+    <AssemblyName>Eresys.Runner</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -38,31 +39,64 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BspCorruptedException.cs" />
-    <Compile Include="BspVersionException.cs" />
-    <Compile Include="HlBspMap.cs" />
-    <Compile Include="HlBspMapLoader.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Script.cs" />
-    <Compile Include="SkyBox.cs" />
-    <Compile Include="Utility.cs" />
-    <Compile Include="Wad.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eresys.Controls\Eresys.Controls.csproj">
+      <Project>{658c338f-c8f6-4893-867b-341a87a4b970}</Project>
+      <Name>Eresys.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eresys.Extra\Eresys.Extra.csproj">
+      <Project>{fa5ee17e-d17d-424e-aaae-b0382a940f83}</Project>
+      <Name>Eresys.Extra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eresys.Graphics.OpenGL\Eresys.Graphics.OpenGL.csproj">
+      <Project>{74bde312-c69c-43dd-823e-1d9432001ef9}</Project>
+      <Name>Eresys.Graphics.OpenGL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eresys.Graphics\Eresys.Graphics.csproj">
       <Project>{0cb70984-6883-46b0-a11e-f6b791801c22}</Project>
       <Name>Eresys.Graphics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Eresys.Kernel\Eresys.Kernel.csproj">
+      <Project>{675b1f0c-6914-4c6d-9921-61b9f1aa6e97}</Project>
+      <Name>Eresys.Kernel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eresys.Math\Eresys.Math.csproj">
-      <Project>{489AD58C-F8C1-4A93-BCCA-1BD8CF42AE52}</Project>
+      <Project>{489ad58c-f8c1-4a93-bcca-1bd8cf42ae52}</Project>
       <Name>Eresys.Math</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eresys.Practises\Eresys.Practises.csproj">
-      <Project>{E9163B1A-190F-4476-B3AA-7C8935286C83}</Project>
+      <Project>{e9163b1a-190f-4476-b3aa-7c8935286c83}</Project>
       <Name>Eresys.Practises</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eresys.Scene\Eresys.Scene.csproj">

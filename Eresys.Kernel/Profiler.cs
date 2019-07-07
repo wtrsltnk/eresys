@@ -25,9 +25,10 @@ namespace Eresys
             timer.Pause = false;
         }
 
-        public void StartSample(string name)
+        public ProfilerSample StartSample(string name)
         {
-            if (!enabled) return;
+            if (!enabled) return new ProfilerSample(this);
+
             if (activeSample != null)
             {
                 timer.Update();
@@ -58,6 +59,8 @@ namespace Eresys
             activeSample = sample;
             if (rootSample == null) rootSample = sample;
             timer.Update();
+
+            return new ProfilerSample(this);
         }
 
         public void StopSample()

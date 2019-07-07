@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Eresys.Kernel</RootNamespace>
     <AssemblyName>Eresys.Kernel</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,21 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Button.cs" />
-    <Compile Include="Controls\IControls.cs" />
-    <Compile Include="Controls\Key.cs" />
-    <Compile Include="Controls\MouseButton.cs" />
-    <Compile Include="Kernel\IApplication.cs" />
-    <Compile Include="Kernel\Ini.cs" />
-    <Compile Include="Kernel\Kernel.cs" />
-    <Compile Include="Kernel\Log.cs" />
-    <Compile Include="Kernel\Profiler.cs" />
-    <Compile Include="Kernel\Settings.cs" />
-    <Compile Include="Kernel\SystemInfo.cs" />
-    <Compile Include="Kernel\Timer.cs" />
+    <Compile Include="IApplication.cs" />
+    <Compile Include="Ini.cs" />
+    <Compile Include="Kernel.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Profiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SystemInfo.cs" />
+    <Compile Include="Timer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Eresys.Controls\Eresys.Controls.csproj">
+      <Project>{658c338f-c8f6-4893-867b-341a87a4b970}</Project>
+      <Name>Eresys.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eresys.Graphics\Eresys.Graphics.csproj">
       <Project>{0cb70984-6883-46b0-a11e-f6b791801c22}</Project>
       <Name>Eresys.Graphics</Name>

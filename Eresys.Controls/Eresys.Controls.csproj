@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{489AD58C-F8C1-4A93-BCCA-1BD8CF42AE52}</ProjectGuid>
+    <ProjectGuid>{658C338F-C8F6-4893-867B-341A87A4B970}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eresys.Math</RootNamespace>
-    <AssemblyName>Eresys.Math</AssemblyName>
+    <RootNamespace>Eresys.Controls</RootNamespace>
+    <AssemblyName>Eresys.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,15 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
-    <Compile Include="Line.cs" />
-    <Compile Include="Math.cs" />
-    <Compile Include="Matrix.cs" />
-    <Compile Include="Plane.cs" />
-    <Compile Include="Point2D.cs" />
-    <Compile Include="Point3D.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="DummyControls.cs" />
+    <Compile Include="IControls.cs" />
+    <Compile Include="Key.cs" />
+    <Compile Include="MouseButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eresys.Math\Eresys.Math.csproj">
+      <Project>{489ad58c-f8c1-4a93-bcca-1bd8cf42ae52}</Project>
+      <Name>Eresys.Math</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

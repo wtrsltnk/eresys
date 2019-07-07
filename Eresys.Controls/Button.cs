@@ -20,6 +20,8 @@ namespace Eresys
     /// </summary>
     public class Button
     {
+        private IControls _controls;
+
         /// <summary>
         /// Hiermee kan de toets worden aan- of uitgeschakelt (standaard = aan).
         /// </summary>
@@ -31,8 +33,9 @@ namespace Eresys
         /// <param name="Eresys.Controls">Controls object dat zal worden gebruikt om de status van de toets op te vragen.</param>
         /// <param name="key">karakter v/d toets</param>
         /// <param name="type">type van de toets (key of trigger)</param>
-        public Button(Key key, ButtonType type)
+        public Button(Key key, ButtonType type, IControls controls)
         {
+            _controls = controls;
             this.enabled = true;
             this.mouse = false;
             this.key = key;
@@ -64,10 +67,17 @@ namespace Eresys
         /// </returns>
         public bool Active()
         {
-            if (!enabled) return false;
-            bool active = mouse ? Kernel.Controls.IsMouseButtonActive(button) : Kernel.Controls.IsKeyActive(key);
+            if (!enabled)
+            {
+                return false;
+            }
+
+            bool active = mouse ? _controls.IsMouseButtonActive(button) : _controls.IsKeyActive(key);
+
             if (type == ButtonType.Key)
+            {
                 return active;
+            }
             else
             {
                 if (active)

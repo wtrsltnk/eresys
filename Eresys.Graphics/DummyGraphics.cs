@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Eresys.Math;
+using System;
 using System.Windows.Forms;
 
-namespace Eresys.Graphics.OpenGL
+namespace Eresys
 {
-    public class OpenGlGraphics : IGraphics
+    public class DummyGraphics : IGraphics
     {
         public bool WireFrame { get; set; }
         public bool Lighting { get; set; }
@@ -12,8 +13,8 @@ namespace Eresys.Graphics.OpenGL
         public byte Alpha { get; set; }
         public bool DepthBuffer { get; set; }
         public bool Filtering { get; set; }
-        public Eresys.Camera Camera { get; set; }
-        public Eresys.Math.Matrix WorldMatrix { get; set; }
+        public Camera Camera { get; set; }
+        public Matrix WorldMatrix { get; set; }
         public float Brightness { get; set; }
         public float Contrast { get; set; }
         public float Gamma { get; set; }
@@ -34,12 +35,12 @@ namespace Eresys.Graphics.OpenGL
 
             Form.Activated += Form_Activated;
             Form.Deactivate += Form_Deactivate;
-            Form.FormClosed += Form_FormClosed;
+            Form.FormClosed += Form_Closed;
 
             Form.Show();
         }
 
-        private void Form_FormClosed(object sender, FormClosedEventArgs e)
+        private void Form_Closed(object sender, FormClosedEventArgs e)
         {
             Closed?.Invoke(sender, e);
         }
@@ -56,67 +57,51 @@ namespace Eresys.Graphics.OpenGL
 
         public int AddFont(string name, float size, bool bold, bool italic)
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
 
         public int AddTexture(Texture texture)
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
 
         public int AddVertexPool(VertexPool vertexPool)
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
 
         public void BeginFrame()
-        {
-            throw new System.NotImplementedException();
-        }
+        { }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            Form.Close();
         }
 
         public void EndFrame()
-        {
-            throw new System.NotImplementedException();
-        }
+        { }
 
         public void RemoveTexture(int textureIdx)
-        {
-            throw new System.NotImplementedException();
-        }
+        { }
 
         public void RemoveVertexPool(int vertexPoolIdx)
-        {
-            throw new System.NotImplementedException();
-        }
+        { }
 
-        public void RenderText(int fontIdx, Color color, Eresys.Math.Point2D position, string text)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void RenderText(int fontIdx, Color color, Point2D position, string text)
+        { }
 
         public void RenderTexture(int textureIdx, float left, float top, float width, float height, float depth)
-        {
-            throw new System.NotImplementedException();
-        }
+        { }
 
         public void RenderTriangleFan(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
-        {
-            throw new System.NotImplementedException();
-        }
+        { }
 
         public void RenderTriangleStrip(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
-        {
-            throw new System.NotImplementedException();
-        }
+        { }
 
         public Texture TakeScreenshot()
         {
-            throw new System.NotImplementedException();
+            return new Texture(256, 256, "Screenshot");
         }
     }
 }
