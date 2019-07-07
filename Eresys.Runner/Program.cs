@@ -1,5 +1,5 @@
 ﻿using Eresys.Extra;
-using Eresys.Graphics.OpenGL;
+using Eresys.Graphics.GL;
 using Eresys.Math;
 using Eresys.Practises.Logging;
 using System;
@@ -53,7 +53,7 @@ namespace Eresys
                     kernel.Graphics = new DummyGraphics();// DXGraphics();
                     break;
                 case "opengl":
-                    kernel.Graphics = new OpenGlGraphics();
+                    kernel.Graphics = new GlGraphics();
                     break;
                 default:
                     throw new Exception("Graphics renderer " + kernel.Settings["graphics"] + " invalid!");
@@ -111,13 +111,19 @@ namespace Eresys
             // init scene
             try
             {
-                if (bspFileName == "") bspFileName = kernel.Settings["map"];
+                if (string.IsNullOrWhiteSpace(bspFileName))
+                {
+                    bspFileName = kernel.Settings["map"];
+                }
+
                 bsp = new HlBspMap();
-                var loader = new HlBspMapLoader();
-                loader.LoadFromFile(bspFileName, bsp, kernel.Graphics);
+
+                new HlBspMapLoader()
+                    .LoadFromFile(bspFileName, bsp, kernel.Graphics);
+
                 kernel.Scene.AddObject(bsp);
             }
-            catch (System.IO.FileNotFoundException fnfe)
+            catch (FileNotFoundException fnfe)
             {
                 Logger.Log(LogLevels.Warning, $"Couldn't load bsp map \'{fnfe.FileName}\'!");
                 bsp = null;

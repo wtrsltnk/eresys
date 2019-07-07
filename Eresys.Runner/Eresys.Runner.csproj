@@ -79,9 +79,9 @@
       <Project>{fa5ee17e-d17d-424e-aaae-b0382a940f83}</Project>
       <Name>Eresys.Extra</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Eresys.Graphics.OpenGL\Eresys.Graphics.OpenGL.csproj">
+    <ProjectReference Include="..\Eresys.Graphics.OpenGL\Eresys.Graphics.GL.csproj">
       <Project>{74bde312-c69c-43dd-823e-1d9432001ef9}</Project>
-      <Name>Eresys.Graphics.OpenGL</Name>
+      <Name>Eresys.Graphics.GL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eresys.Graphics\Eresys.Graphics.csproj">
       <Project>{0cb70984-6883-46b0-a11e-f6b791801c22}</Project>

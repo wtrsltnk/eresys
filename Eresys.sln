@@ -14,9 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Extra", "Eresys.Extr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics", "Eresys.Graphics\Eresys.Graphics.csproj", "{0CB70984-6883-46B0-A11E-F6B791801C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics.OpenGL", "Eresys.Graphics.OpenGL\Eresys.Graphics.OpenGL.csproj", "{74BDE312-C69C-43DD-823E-1D9432001EF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics.GL", "Eresys.Graphics.OpenGL\Eresys.Graphics.GL.csproj", "{74BDE312-C69C-43DD-823E-1D9432001EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics.DirectX", "Eresys.Graphics.DirectX\Eresys.Graphics.DirectX.csproj", "{6C010089-1805-41B9-B120-892D73A6F7FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Graphics.DX", "Eresys.Graphics.DirectX\Eresys.Graphics.DX.csproj", "{6C010089-1805-41B9-B120-892D73A6F7FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eresys.Controls", "Eresys.Controls\Eresys.Controls.csproj", "{658C338F-C8F6-4893-867B-341A87A4B970}"
 EndProject

@@ -61,6 +61,9 @@ namespace Eresys
         /// </summary>
         public float FPS { get; private set; } = 0.0f;
 
+        /// <summary>
+        /// Het aantal frames gerenderd
+        /// </summary>
         public long FramesDrawn { get; private set; } = 0;
 
         /// <summary>
@@ -70,9 +73,12 @@ namespace Eresys
         {
             get
             {
-                float res = 0.0f;
-                if (FramesDrawn > fpsMeasDelay) res = (float)((FramesDrawn - fpsMeasDelay) / (timer.Time - fpsOfsTime));
-                return res;
+                if (FramesDrawn <= fpsMeasDelay)
+                {
+                    return 0.0f;
+                }
+
+                return (float)((FramesDrawn - fpsMeasDelay) / (timer.Time - fpsOfsTime));
             }
         }
 
