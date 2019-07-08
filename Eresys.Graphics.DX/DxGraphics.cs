@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Windows.Forms;
-using System.Drawing;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+﻿using Eresys.Math;
 using Eresys.Practises.Logging;
 using SlimDX.Direct3D9;
+using System;
+using System.Collections;
+using System.Windows.Forms;
 
 namespace Eresys
 {
     /// <summary>
     /// DirectX implementatie van IGraphics. Zie IGraphics voor meer info.
     /// </summary>
-    public class DXGraphics : IGraphics
+    public class DxGraphics : IGraphics
     {
         public ILogger Logger { get; set; } = new ConsoleLogger();
 
@@ -199,7 +197,7 @@ namespace Eresys
         public const VertexFormats VERTEX_FVF = VertexFormats.Position | VertexFormats.Texture2;
         public const int VERTEX_SIZE = 20;
 
-        public DXGraphics()
+        public DxGraphics()
         {
             // init members
             wire = false;
@@ -240,13 +238,13 @@ namespace Eresys
             Logger.Log(LogLevels.Info, );
 
             // init window
-            Kernel.Form.Text = "Eresys";
-            Kernel.Form.Icon = new Icon(this.GetType(), "Eresys.ico");
-            Kernel.Form.BackColor = System.Drawing.Color.Black;
+            Form.Text = "Eresys";
+            Form.Icon = new Icon(this.GetType(), "Eresys.ico");
+            Form.BackColor = System.Drawing.Color.Black;
             if (!fullscreen)
             {
-                Kernel.Form.ClientSize = new Size(width, height);
-                Kernel.Form.StartPosition = FormStartPosition.CenterScreen;
+                Form.ClientSize = new Size(width, height);
+                Form.StartPosition = FormStartPosition.CenterScreen;
             }
 
             // init D3D
@@ -282,7 +280,7 @@ namespace Eresys
                 presentParams.BackBufferHeight = height;
                 presentParams.FullScreenRefreshRateInHz = PresentParameters.DefaultPresentRate;
             }
-            device = new Device(0, hal ? DeviceType.Hardware : DeviceType.Reference, Kernel.Form, tnl ? CreateFlags.HardwareVertexProcessing : CreateFlags.SoftwareVertexProcessing, presentParams);
+            device = new Device(0, hal ? DeviceType.Hardware : DeviceType.Reference, Form, tnl ? CreateFlags.HardwareVertexProcessing : CreateFlags.SoftwareVertexProcessing, presentParams);
 
             // set states
             device.RenderState.SourceBlend = Blend.SourceAlpha;
@@ -325,7 +323,7 @@ namespace Eresys
 
             // show window
             Cursor.Hide();
-            Kernel.Form.Show();
+            Form.Show();
         }
 
         public int AddVertexPool(VertexPool vertexPool)
@@ -360,8 +358,9 @@ namespace Eresys
             size = nw * nh;
 
             // create texture
-            Microsoft.DirectX.Direct3D.Texture dxtex = new Microsoft.DirectX.Direct3D.Texture(device, nw, nh, 1, 0, Format.A8R8G8B8, Pool.Managed);
-            //Microsoft.DirectX.Direct3D.Texture dxtex = new Microsoft.DirectX.Direct3D.Texture(device, nw, nh, 1, Usage.Dynamic, Format.A8R8G8B8, Pool.Default);
+            var dxtex = new Texture(nw, nh);
+            //var dxtex = new Texture(device, nw, nh, 1, 0, Format.A8R8G8B8, Pool.Managed);
+            //Texture dxtex = new Texture(device, nw, nh, 1, Usage.Dynamic, Format.A8R8G8B8, Pool.Default);
 
             // add texture
             idx = textures.Add(new TexListElement(texture, dxtex));
@@ -382,7 +381,7 @@ namespace Eresys
             int height;
             int logPixels;
 
-            Graphics g = Kernel.Form.CreateGraphics();
+            System.Drawing.Graphics g = Form.CreateGraphics();
             System.IntPtr dc = g.GetHdc();
             logPixels = GetDeviceCaps(dc, LogPixelsY);
             g.ReleaseHdc(dc);
@@ -390,7 +389,7 @@ namespace Eresys
 
             height = (int)(-size * (float)logPixels / 72.0f);
 
-            Microsoft.DirectX.Direct3D.Font font = new Microsoft.DirectX.Direct3D.Font(device, height, 0, bold ? FontWeight.Bold : FontWeight.Regular, 0, italic, CharacterSet.Default, Precision.Default, FontQuality.Default, PitchAndFamily.DefaultPitch | PitchAndFamily.FamilyDoNotCare, name);
+            Font font = new Font(device, height, 0, bold ? FontWeight.Bold : FontWeight.Regular, 0, italic, CharacterSet.Default, Precision.Default, FontQuality.Default, PitchAndFamily.DefaultPitch | PitchAndFamily.FamilyDoNotCare, name);
 
             return fonts.Add(new FontListElement(font));
         }
@@ -406,8 +405,8 @@ namespace Eresys
             if (!rendering) return;
 
             VertexBuffer vb = null;
-            Microsoft.DirectX.Direct3D.Texture dxtex = null;
-            Microsoft.DirectX.Direct3D.Texture dxlm = null;
+            Texture dxtex = null;
+            Texture dxlm = null;
 
             // get vertex buffer
             vb = ((VPListElement)vertexPools[vertexPoolIdx]).vb;
@@ -436,8 +435,8 @@ namespace Eresys
             if (!rendering) return;
 
             VertexBuffer vb = null;
-            Microsoft.DirectX.Direct3D.Texture dxtex = null;
-            Microsoft.DirectX.Direct3D.Texture dxlm = null;
+            Texture dxtex = null;
+            Texture dxlm = null;
 
             // get vertex buffer
             vb = ((VPListElement)vertexPools[vertexPoolIdx]).vb;
@@ -465,11 +464,11 @@ namespace Eresys
         {
             if (!rendering) return;
 
-            Microsoft.DirectX.Direct3D.Font font = null;
+            Font font = null;
 
             font = ((FontListElement)fonts[fontIdx]).font;
 
-            font.DrawText(null, text, new Rectangle((int)position.x, (int)position.y, 0, 0), DrawTextFormat.NoClip, color.ToColorCode());
+            font.DrawText(null, text, new System.Drawing.Rectangle((int)position.x, (int)position.y, 0, 0), DrawTextFormat.NoClip, color.ToColorCode());
         }
 
         public void RenderTexture(int textureIdx, float left, float top, float width, float height, float depth)
@@ -477,7 +476,7 @@ namespace Eresys
             if (!rendering) return;
             if (wire) return;
 
-            Microsoft.DirectX.Direct3D.Texture dxtex = null;
+            Texture dxtex = null;
             Microsoft.DirectX.Matrix mProj, mView, mWorld;
             bool zbuffer;
 
@@ -490,9 +489,9 @@ namespace Eresys
             mWorld = device.Transform.World;
 
             // Setup an orthographic perspective
-            device.Transform.Projection = Microsoft.DirectX.Matrix.OrthoLH(1.0f, 1.0f, 0.0f, 1.0f);
-            device.Transform.View = Microsoft.DirectX.Matrix.Identity;
-            device.Transform.World = Microsoft.DirectX.Matrix.Scaling(width, height, 1.0f) * Microsoft.DirectX.Matrix.Translation(left, top, depth);
+            device.Transform.Projection = SlimDX.Matrix.OrthoLH(1.0f, 1.0f, 0.0f, 1.0f);
+            device.Transform.View = SlimDX.Matrix.Identity;
+            device.Transform.World = SlimDX.Matrix.Scaling(width, height, 1.0f) * SlimDX.Matrix.Translation(left, top, depth);
 
             // backup and set depthbuffer
             zbuffer = DepthBuffer;
@@ -543,7 +542,7 @@ namespace Eresys
             {
                 device.Transform.View = EM2DXM(camera.ViewMatrix);
                 device.Transform.Projection = EM2DXM(camera.ProjectionMatrix);
-                device.Transform.World = Microsoft.DirectX.Matrix.Identity;
+                device.Transform.World = SlimDX.Matrix.Identity;
             }
 
             ClearFlags flags = ClearFlags.ZBuffer;
@@ -569,18 +568,18 @@ namespace Eresys
             while (textures.Count > 0) RemoveTexture(0);
             while (vertexPools.Count > 0) RemoveVertexPool(0);
             device.Dispose();
-            Kernel.Form.Close();
+            Form.Close();
             Cursor.Show();
         }
 
         public Texture TakeScreenshot()
         {
-            DisplayMode dm = device.DisplayMode;
-            Microsoft.DirectX.Direct3D.Texture shot = new Microsoft.DirectX.Direct3D.Texture(device, dm.Width, dm.Height, 1, 0, Format.A8R8G8B8, Pool.SystemMemory);
+            DisplayMode dm = device.GetDisplayMode(0);
+            Texture shot = new Texture(device, dm.Width, dm.Height, 1, 0, Format.A8R8G8B8, Pool.SystemMemory);
             device.GetFrontBufferData(0, shot.GetSurfaceLevel(0));
             System.Drawing.Rectangle rect;
-            if (fullscreen) rect = new Rectangle(0, 0, width, height);
-            else rect = new Rectangle(Kernel.Form.PointToScreen(new System.Drawing.Point(0, 0)), new Size(width, height));
+            if (fullscreen) rect = new System.Drawing.Rectangle(0, 0, width, height);
+            else rect = new System.Drawing.Rectangle(Form.PointToScreen(new System.Drawing.Point(0, 0)), new System.Drawing.Size(width, height));
             int[] pixels = (int[])shot.LockRectangle(typeof(int), 0, LockFlags.None, dm.Width * dm.Height);
             Texture res = new Texture(width, height);
             int i = 0;
@@ -713,7 +712,7 @@ namespace Eresys
             fh = (float)h;
 
             // lock texture for writing
-            pixels = (int[])tex.dxtex.LockRectangle(typeof(int), 0, LockFlags.None, size);
+            pixels = (int[])tex.dxtex.LockRectangle(typeof(int), 0, , size);
 
             for (y = 0; y < nh; y++)
             {
@@ -850,9 +849,9 @@ namespace Eresys
         private class VPListElement
         {
             public VertexPool vp;
-            public Microsoft.DirectX.Direct3D.VertexBuffer vb;
+            public VertexBuffer vb;
 
-            public VPListElement(VertexPool vp, Microsoft.DirectX.Direct3D.VertexBuffer vb)
+            public VPListElement(VertexPool vp, VertexBuffer vb)
             {
                 this.vp = vp;
                 this.vb = vb;
@@ -862,9 +861,9 @@ namespace Eresys
         private class TexListElement
         {
             public Texture tex;
-            public Microsoft.DirectX.Direct3D.Texture dxtex;
+            public Texture dxtex;
 
-            public TexListElement(Texture tex, Microsoft.DirectX.Direct3D.Texture dxtex)
+            public TexListElement(Texture tex, Texture dxtex)
             {
                 this.tex = tex;
                 this.dxtex = dxtex;
@@ -873,15 +872,15 @@ namespace Eresys
 
         private class FontListElement
         {
-            public Microsoft.DirectX.Direct3D.Font font;
+            public Font font;
 
-            public FontListElement(Microsoft.DirectX.Direct3D.Font font)
+            public FontListElement(Font font)
             {
                 this.font = font;
             }
         }
 
-        private static Matrix DXM2EM(Microsoft.DirectX.Matrix from)
+        private static Matrix DXM2EM(SlimDX.Matrix from)
         {
             Matrix to = new Matrix();
 
@@ -908,9 +907,9 @@ namespace Eresys
             return to;
         }
 
-        private static Microsoft.DirectX.Matrix EM2DXM(Matrix from)
+        private static SlimDX.Matrix EM2DXM(Matrix from)
         {
-            Microsoft.DirectX.Matrix to = new Microsoft.DirectX.Matrix();
+            SlimDX.Matrix to = new SlimDX.Matrix();
 
             to.M11 = from.element[0, 0];
             to.M12 = from.element[1, 0];
@@ -935,6 +934,36 @@ namespace Eresys
             return to;
         }
 
+        public void Startup()
+        {
+            Form = new Form();
+
+            Form.Activated += Form_Activated;
+            Form.Deactivate += Form_Deactivate;
+            Form.FormClosed += Form_FormClosed;
+
+        }
+
+        private void Form_Activated(object sender, EventArgs e)
+        {
+            Activated?.Invoke(sender, e);
+        }
+
+        private void Form_Deactivate(object sender, EventArgs e)
+        {
+            Deactivate?.Invoke(sender, e);
+        }
+
+        private void Form_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Closed?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Het hoofdvenster
+        /// </summary>
+        public static Form Form { get; private set; } = null;
+
         private bool fullscreen, hal, tnl;
         private int width, height, depth;
         private bool wire, light, alphaBlend, texAlpha, zbuffer, vsync, filter;
@@ -955,5 +984,9 @@ namespace Eresys
         private Device device;
 
         private VertexBuffer vb2d; // vertex buffer used for 2D texture drawing
+
+        public event EventHandler Activated;
+        public event EventHandler Deactivate;
+        public event EventHandler Closed;
     }
 }

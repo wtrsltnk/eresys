@@ -2,6 +2,7 @@
 using Khronos;
 using OpenGL;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
@@ -95,9 +96,19 @@ namespace Eresys.Graphics.GL
             return 0;
         }
 
+        private readonly Dictionary<int, VertexPool> _vertexPools = new Dictionary<int, VertexPool>());
+
         public int AddVertexPool(VertexPool vertexPool)
         {
-            return 0;
+            int newIndex = 0;
+            while (_vertexPools.ContainsKey(newIndex))
+            {
+                newIndex++;
+            }
+
+            _vertexPools.Add(newIndex, vertexPool);
+
+            return newIndex;
         }
 
         public void BeginFrame()
@@ -116,7 +127,15 @@ namespace Eresys.Graphics.GL
         { }
 
         public void RemoveVertexPool(int vertexPoolIdx)
-        { }
+        {
+            if (!_vertexPools.ContainsKey(vertexPoolIdx))
+            {
+                return;
+            }
+
+            _vertexPools[vertexPoolIdx] = null;
+        }
+
 
         public void RenderText(int fontIdx, Color color, Eresys.Math.Point2D position, string text)
         { }
@@ -125,10 +144,20 @@ namespace Eresys.Graphics.GL
         { }
 
         public void RenderTriangleFan(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
-        { }
+        {
+            if (!_vertexPools.ContainsKey(vertexPoolIdx))
+            {
+                throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
+            }
+        }
 
         public void RenderTriangleStrip(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
-        { }
+        {
+            if (!_vertexPools.ContainsKey(vertexPoolIdx))
+            {
+                throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
+            }
+        }
 
         public Texture TakeScreenshot()
         {
