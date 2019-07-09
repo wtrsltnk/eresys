@@ -29,8 +29,24 @@ namespace Eresys.Extra
                 .ToArray());
         }
 
+        public static void Validate(this BspLump lump, int size)
+        {
+            if (lump.length % size != 0)
+            {
+                throw new BspCorruptedException();
+            }
+
+            int count = lump.length / size;
+            if (count <= 0)
+            {
+                throw new BspCorruptedException();
+            }
+        }
+
         public static T[] ReadLumpData<T>(this BinaryReader br, BspLump lump, int size, Func<BinaryReader, T> readType)
         {
+            lump.Validate(size);
+
             if (lump.length % size != 0)
             {
                 throw new BspCorruptedException();
@@ -48,6 +64,29 @@ namespace Eresys.Extra
                 .Range(0, count)
                 .Select(i => readType(br))
                 .ToArray();
+        }
+
+        public static BspTexture[] ReadBspTexturesLumpData(this BinaryReader br, BspLump lump)
+        {
+            br.BaseStream.Position = lump.offset;
+            var count = br.ReadInt32();
+
+            var result = new BspTexture[count];
+
+            for (int i = 0,  j = lump.offset + 4; i < count; i++, j += 4)
+            {
+                br.BaseStream.Position = j;
+                result[i] = new HlBspMap.BspTexture(br, lump.offset, br.ReadInt32());
+            }
+
+            return result;
+        }
+
+        public static byte[] ReadLumpBytes(this BinaryReader br, BspLump lump)
+        {
+            br.BaseStream.Position = lump.offset;
+
+            return br.ReadBytes(lump.length);
         }
 
         public static Plane ReadPlane(this BinaryReader br)
@@ -142,5 +181,14 @@ namespace Eresys.Extra
 
             return result;
         }
-    }
+
+        public static BspFace ReadBspFace(this BinaryReader br)
+        {
+            var result = new BspFace();
+
+            br.BaseStream.Position += 20;
+
+            return result;
+        }
+ }
 }

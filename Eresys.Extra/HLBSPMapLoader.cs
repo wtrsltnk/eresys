@@ -119,40 +119,23 @@ namespace Eresys.Extra
                 // load models
                 models = br.ReadLumpData(lumps[(int)BspLumpTypes.Models], 64, BinaryReaderExtensions.ReadBspModel);
 
-                // load textures
-                lump = lumps[(int)BspLumpTypes.Textures];
-                br.BaseStream.Position = lump.offset;
-                n = br.ReadInt32();
-                textures = new HlBspMap.BspTexture[n];
-                for (i = 0, j = lump.offset + 4; i < n; i++, j += 4)
-                {
-                    br.BaseStream.Position = j;
-                    textures[i] = new HlBspMap.BspTexture(br, lump.offset, br.ReadInt32());
-                }
-                
                 // load lighting data
-                lump = lumps[(int)BspLumpTypes.Lighting];
-                br.BaseStream.Position = lump.offset;
-                lightData = br.ReadBytes(lump.length);
-                
+                lightData = br.ReadLumpBytes(lumps[(int)BspLumpTypes.Lighting]);
+
                 // load visibility data (PVS sets)
-                lump = lumps[(int)BspLumpTypes.VisDate];
-                br.BaseStream.Position = lump.offset;
-                map.Pvs = br.ReadBytes(lump.length);
-                
+                map.Pvs = br.ReadLumpBytes(lumps[(int)BspLumpTypes.VisDate]);
+
+                // load textures
+                textures = br.ReadBspTexturesLumpData(lumps[(int)BspLumpTypes.Textures]);
+
                 // load faces
-                lump = lumps[(int)BspLumpTypes.Faces];
-                if (lump.length % 20 != 0)
-                {
-                    throw new BspCorruptedException(map.FileName);
-                }
-                n = lump.length / 20;
-                map.Faces = new BspFace[n];
+                map.Faces = br.ReadLumpData(lumps[(int)BspLumpTypes.Faces], 20, BinaryReaderExtensions.ReadBspFace);
+
                 var addedTextures = new Dictionary<Texture, int>();
                 lightmaps = new ArrayList();
                 faceVertices = new Queue();
-                br.BaseStream.Position = lump.offset;
-                for (i = 0; i < n; i++)
+                br.BaseStream.Position = lumps[(int)BspLumpTypes.Faces].offset;
+                for (i = 0; i < map.Faces.Length; i++)
                 {
                     // create new face
                     map.Faces[i] = new BspFace();
