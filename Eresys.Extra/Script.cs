@@ -129,4 +129,31 @@ namespace Eresys.Extra
 
         private readonly List<ScriptBlock> _blocks;
     }
+
+    public static class ScriptExtensions
+    {
+        public static float WorldspawnMaxRange(this Script script)
+        {
+            try
+            {
+                return int.Parse(script["worldspawn"][0]["MaxRange"]);
+            }
+            catch (Exception)
+            {
+                return 0x4000;
+            }
+        }
+
+        public static string WorldspawnSkyName(this Script script)
+        {
+            try
+            {
+                return script["worldspawn"][0]["skyname"] + ".bmp";
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+    }
 }

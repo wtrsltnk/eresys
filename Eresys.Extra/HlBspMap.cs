@@ -2,6 +2,7 @@ using Eresys.Extra;
 using Eresys.Math;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Eresys
@@ -630,7 +631,7 @@ namespace Eresys
 
         public ushort[] MarkFaces { get; set; }         // markFaces array. these are indices into the faces array
 
-        public ArrayList ModelFaces { get; set; }           // stores all faces used in models
+        public List<BspFace> ModelFaces { get; set; }           // stores all faces used in models
 
         public BspNode[] Nodes { get; set; }               // nodes array. these are the nodes of the bsp tree
 

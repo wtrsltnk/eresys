@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryReaderExtensions.cs" />
     <Compile Include="BspCorruptedException.cs" />
     <Compile Include="BspVersionException.cs" />
     <Compile Include="HlBspMap.cs" />
