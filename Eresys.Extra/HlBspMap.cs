@@ -599,6 +599,7 @@ namespace Eresys
 
         public class BspLeaf
         {
+            public int contents;
             public int pvs;         // index into the pvs array; -1 = no pvs (--> everything is visible)
             public ushort firstMarkFace;    // index of the first face (in the face leaf array)
             public ushort numMarkFaces; // number of consecutive edges (in the face leaf array)

@@ -129,17 +129,17 @@ namespace Eresys.Extra
                     br.BaseStream.Position = j;
                     textures[i] = new HlBspMap.BspTexture(br, lump.offset, br.ReadInt32());
                 }
-
+                
                 // load lighting data
                 lump = lumps[(int)BspLumpTypes.Lighting];
                 br.BaseStream.Position = lump.offset;
                 lightData = br.ReadBytes(lump.length);
-
+                
                 // load visibility data (PVS sets)
                 lump = lumps[(int)BspLumpTypes.VisDate];
                 br.BaseStream.Position = lump.offset;
                 map.Pvs = br.ReadBytes(lump.length);
-
+                
                 // load faces
                 lump = lumps[(int)BspLumpTypes.Faces];
                 if (lump.length % 20 != 0)

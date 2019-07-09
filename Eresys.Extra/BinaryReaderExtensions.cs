@@ -118,11 +118,12 @@ namespace Eresys.Extra
         {
             var result = new BspLeaf();
 
+            result.contents = br.ReadInt32();
             result.pvs = br.ReadInt32();
             br.BaseStream.Position += 12;
             result.firstMarkFace = br.ReadUInt16();
             result.numMarkFaces = br.ReadUInt16();
-            br.BaseStream.Position += 8;
+            br.BaseStream.Position += 4;
 
             return result;
         }
