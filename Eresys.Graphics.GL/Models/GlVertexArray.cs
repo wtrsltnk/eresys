@@ -27,7 +27,7 @@ namespace Eresys.Graphics.GL.Models
             // Select the buffer object
             Gl.BindBuffer(BufferTarget.ArrayBuffer, _BufferPosition.BufferName);
             // Format the vertex information: 2 floats from the current buffer
-            Gl.VertexAttribPointer((uint)program.LocationPosition, 2, VertexAttribType.Float, false, 0, IntPtr.Zero);
+            Gl.VertexAttribPointer((uint)program.LocationPosition, 3, VertexAttribType.Float, false, 0, IntPtr.Zero);
             // Enable attribute
             Gl.EnableVertexAttribArray((uint)program.LocationPosition);
 
@@ -49,6 +49,23 @@ namespace Eresys.Graphics.GL.Models
 
             _BufferPosition.Dispose();
             _BufferColor.Dispose();
+        }
+
+        internal static GlVertexArray FromVertexPool(GlProgram program, VertexPool vertexPool)
+        {
+            var pos = new float[vertexPool.Size * 3];
+            var col = new float[vertexPool.Size * 3];
+
+            for (int i = 0; i < vertexPool.Size; i++)
+            {
+                pos[i * 3 + 0] = vertexPool[i].position.x;
+                pos[i * 3 + 1] = vertexPool[i].position.y;
+                pos[i * 3 + 2] = vertexPool[i].position.z;
+
+                col[i * 3 + 0] = col[i * 3 + 1] = col[i * 3 + 2] = 1.0f;
+            }
+
+            return new GlVertexArray(program, pos, col);
         }
     }
 }

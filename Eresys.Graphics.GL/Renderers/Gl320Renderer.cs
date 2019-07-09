@@ -1,40 +1,22 @@
 ﻿using Eresys.Graphics.GL.Models;
 using OpenGL;
+using System;
+using System.Collections.Generic;
 
 namespace Eresys.Graphics.GL.Renderers
 {
     public class Gl320Renderer : IGlRenderer
     {
         #region Common Data
-
-        private static float _Angle = 0;
-
-        /// <summary>
-        /// Vertex position array.
-        /// </summary>
-        private static readonly float[] _ArrayPosition = new float[] {
-            0.0f, 0.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f
-        };
-
-        /// <summary>
-        /// Vertex color array.
-        /// </summary>
-        private static readonly float[] _ArrayColor = new float[] {
-            1.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 1.0f
-        };
-
+        
         private readonly string[] _VertexSourceGL = {
             "#version 150 compatibility\n",
             "uniform mat4 uMVP;\n",
-            "in vec2 aPosition;\n",
+            "in vec3 aPosition;\n",
             "in vec3 aColor;\n",
             "out vec3 vColor;\n",
             "void main() {\n",
-            "	gl_Position = uMVP * vec4(aPosition, 0.0, 1.0);\n",
+            "	gl_Position = uMVP * vec4(aPosition, 1.0);\n",
             "	vColor = aColor;\n",
             "}\n"
         };
@@ -57,47 +39,70 @@ namespace Eresys.Graphics.GL.Renderers
         /// The program used for drawing the triangle.
         /// </summary>
         private GlProgram _Program;
-
-        /// <summary>
-        /// The vertex arrays used for drawing the triangle.
-        /// </summary>
-        private GlVertexArray _VertexArray;
-
+        
         #endregion
 
         public void Create()
         {
             _Program = new GlProgram(_VertexSourceGL, _FragmentSourceGL);
-            _VertexArray = new GlVertexArray(_Program, _ArrayPosition, _ArrayColor);
         }
 
         public void Destroy()
         {
             _Program?.Dispose();
-            _VertexArray?.Dispose();
+        }
+        
+        #region Vertex Pools
+        private readonly Dictionary<int, GlVertexArray> _vertexPools = new Dictionary<int, GlVertexArray>();
+
+        public int AddVertexPool(VertexPool vertexPool)
+        {
+            int newIndex = 0;
+            while (_vertexPools.ContainsKey(newIndex))
+            {
+                newIndex++;
+            }
+
+            _vertexPools.Add(newIndex, GlVertexArray.FromVertexPool(_Program, vertexPool));
+
+            return newIndex;
         }
 
-        public void Render()
+        public void RemoveVertexPool(int vertexPoolIdx)
         {
-            // Compute the model-view-projection on CPU
-            Matrix4x4f projection = Matrix4x4f.Ortho2D(-1.0f, +1.0f, -1.0f, +1.0f);
-            Matrix4x4f modelview = Matrix4x4f.Translated(-0.5f, -0.5f, 0.0f) * Matrix4x4f.RotatedZ(_Angle);
+            if (!_vertexPools.ContainsKey(vertexPoolIdx))
+            {
+                return;
+            }
+
+            _vertexPools[vertexPoolIdx] = null;
+        }
+
+        public void RenderTriangleFan(float[] matrix, int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
+        {
+            if (!_vertexPools.ContainsKey(vertexPoolIdx))
+            {
+                throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
+            }
 
             // Select the program for drawing
             Gl.UseProgram(_Program.ProgramName);
             // Set uniform state
-            Gl.UniformMatrix4f(_Program.LocationMVP, 1, false, projection * modelview);
+            Gl.UniformMatrix4(_Program.LocationMVP, false, matrix);
             // Use the vertex array
-            Gl.BindVertexArray(_VertexArray.ArrayName);
+            Gl.BindVertexArray(_vertexPools[vertexPoolIdx].ArrayName);
             // Draw triangle
             // Note: vertex attributes are streamed from GPU memory
-            Gl.DrawArrays(PrimitiveType.Triangles, 0, 3);
+            Gl.DrawArrays(PrimitiveType.TriangleFan, 0, 3);
         }
 
-        public void Update()
+        public void RenderTriangleStrip(float[] matrix, int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
         {
-            // Change triangle rotation
-            _Angle = (_Angle + 0.1f) % 45.0f;
+            if (!_vertexPools.ContainsKey(vertexPoolIdx))
+            {
+                throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
+            }
         }
+        #endregion
     }
 }

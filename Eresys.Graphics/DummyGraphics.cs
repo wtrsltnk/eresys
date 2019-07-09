@@ -28,6 +28,10 @@ namespace Eresys
         public event EventHandler Activated;
         public event EventHandler Deactivate;
         public event EventHandler Closed;
+        public event EventHandler ContextCreated;
+        public event EventHandler Update;
+        public event EventHandler Render;
+        public event EventHandler ContextDestroying;
 
         public void Startup()
         {

@@ -12,6 +12,14 @@ namespace Eresys
     /// </summary>
     public interface IGraphics : System.IDisposable
     {
+        event EventHandler ContextCreated;
+
+        event EventHandler Update;
+
+        event EventHandler Render;
+
+        event EventHandler ContextDestroying;
+
         event EventHandler Activated;
 
         event EventHandler Deactivate;

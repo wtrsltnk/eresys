@@ -583,7 +583,7 @@ namespace Eresys.Extra
                     mode = Byte.Parse(modelScripts[i]["rendermode"]);
                     amount = Byte.Parse(modelScripts[i]["renderamt"]);
                 }
-                catch (IndexOutOfRangeException)
+                catch (InvalidOperationException)
                 {
                     continue;
                 }

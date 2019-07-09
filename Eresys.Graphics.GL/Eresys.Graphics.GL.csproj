@@ -7,8 +7,8 @@
     <ProjectGuid>{74BDE312-C69C-43DD-823E-1D9432001EF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eresys.Graphics.OpenGL</RootNamespace>
-    <AssemblyName>Eresys.Graphics.OpenGL</AssemblyName>
+    <RootNamespace>Eresys.Graphics.GL</RootNamespace>
+    <AssemblyName>Eresys.Graphics.GL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -72,6 +72,8 @@
     <Compile Include="Models\GlProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\GlVertexArray.cs" />
+    <Compile Include="IRendererFactory.cs" />
+    <Compile Include="Renderers\RendererFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Eresys.Graphics\Eresys.Graphics.csproj">

@@ -97,5 +97,19 @@ namespace Eresys.Graphics.GL.Renderers
             // Change triangle rotation
             _Angle = (_Angle + 0.1f) % 45.0f;
         }
+
+        public int AddVertexPool(VertexPool vertexPool)
+        {
+            return 0;
+        }
+
+        public void RemoveVertexPool(int vertexPoolIdx)
+        { }
+
+        public void RenderTriangleFan(float[] matrix, int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
+        { }
+
+        public void RenderTriangleStrip(float[] matrix, int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
+        { }
     }
 }

@@ -1,8 +1,7 @@
-﻿using Eresys.Graphics.GL.Renderers;
+﻿using Eresys.Math;
 using Khronos;
 using OpenGL;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
@@ -10,6 +9,16 @@ namespace Eresys.Graphics.GL
 {
     public class GlGraphics : IGraphics
     {
+        #region Dependancies
+        private readonly IRendererFactory _rendererFactory;
+        #endregion
+
+        public GlGraphics(
+            IRendererFactory rendererFactory)
+        {
+            _rendererFactory = rendererFactory ?? throw new ArgumentNullException(nameof(rendererFactory));
+        }
+
         public bool WireFrame { get; set; }
         public bool Lighting { get; set; }
         public bool AlphaBlending { get; set; }
@@ -29,6 +38,10 @@ namespace Eresys.Graphics.GL
         /// </summary>
         public static Form Form { get; private set; } = null;
 
+        public event EventHandler ContextCreated;
+        public event EventHandler Update;
+        public event EventHandler Render;
+        public event EventHandler ContextDestroying;
         public event EventHandler Activated;
         public event EventHandler Deactivate;
         public event EventHandler Closed;
@@ -39,9 +52,9 @@ namespace Eresys.Graphics.GL
         {
             Form = new Form();
 
-            Form.Activated += Form_Activated;
-            Form.Deactivate += Form_Deactivate;
-            Form.FormClosed += Form_FormClosed;
+            Form.Activated += (sender, e) => Activated?.Invoke(sender, e);
+            Form.Deactivate += (sender, e) => Deactivate?.Invoke(sender, e);
+            Form.FormClosed += (sender, e) => Closed?.Invoke(sender, e);
 
             RenderControl = new GlControl();
             Form.SuspendLayout();
@@ -53,120 +66,30 @@ namespace Eresys.Graphics.GL
             RenderControl.BackColor = System.Drawing.Color.DimGray;
             RenderControl.ColorBits = 24u;
             RenderControl.DepthBits = 0u;
-            RenderControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            RenderControl.Dock = DockStyle.Fill;
             RenderControl.Location = new System.Drawing.Point(0, 0);
             RenderControl.MultisampleBits = 0u;
             RenderControl.Name = "RenderControl";
             RenderControl.Size = new System.Drawing.Size(731, 428);
             RenderControl.StencilBits = 0u;
             RenderControl.TabIndex = 0;
-            RenderControl.ContextCreated += new System.EventHandler<OpenGL.GlControlEventArgs>(this.RenderControl_ContextCreated);
-            RenderControl.ContextDestroying += new System.EventHandler<OpenGL.GlControlEventArgs>(this.RenderControl_ContextDestroying);
-            RenderControl.Render += new System.EventHandler<OpenGL.GlControlEventArgs>(this.RenderControl_Render);
-            RenderControl.ContextUpdate += new System.EventHandler<OpenGL.GlControlEventArgs>(this.RenderControl_ContextUpdate);
+            RenderControl.ContextCreated += RenderControl_ContextCreated;
+            RenderControl.ContextDestroying += (sender, e) => ContextDestroying?.Invoke(sender, e);
+            RenderControl.Render += (sender, e) => Render?.Invoke(sender, e);
+            RenderControl.ContextUpdate += (sender, e) => Update?.Invoke(sender, e);
 
             Form.Controls.Add(RenderControl);
             Form.ResumeLayout(false);
 
             Form.Show();
+
+            //WorldMatrix = Matrix.PerspectiveFovLH(90.0f, 1.0f, 0.1f, 1000.0f);
+            WorldMatrix = Matrix.Translation(0, 0, 0);
         }
-
-        private void Form_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Closed?.Invoke(sender, e);
-        }
-
-        private void Form_Deactivate(object sender, EventArgs e)
-        {
-            Deactivate?.Invoke(sender, e);
-        }
-
-        private void Form_Activated(object sender, EventArgs e)
-        {
-            Activated?.Invoke(sender, e);
-        }
-
-        public int AddFont(string name, float size, bool bold, bool italic)
-        {
-            return 0;
-        }
-
-        public int AddTexture(Texture texture)
-        {
-            return 0;
-        }
-
-        private readonly Dictionary<int, VertexPool> _vertexPools = new Dictionary<int, VertexPool>());
-
-        public int AddVertexPool(VertexPool vertexPool)
-        {
-            int newIndex = 0;
-            while (_vertexPools.ContainsKey(newIndex))
-            {
-                newIndex++;
-            }
-
-            _vertexPools.Add(newIndex, vertexPool);
-
-            return newIndex;
-        }
-
-        public void BeginFrame()
-        {
-            Gl.Viewport(0, 0, RenderControl.ClientSize.Width, RenderControl.ClientSize.Height);
-            Gl.Clear(ClearBufferMask.ColorBufferBit);
-        }
-
-        public void Dispose()
-        { }
-
-        public void EndFrame()
-        { }
-
-        public void RemoveTexture(int textureIdx)
-        { }
-
-        public void RemoveVertexPool(int vertexPoolIdx)
-        {
-            if (!_vertexPools.ContainsKey(vertexPoolIdx))
-            {
-                return;
-            }
-
-            _vertexPools[vertexPoolIdx] = null;
-        }
-
-
-        public void RenderText(int fontIdx, Color color, Eresys.Math.Point2D position, string text)
-        { }
-
-        public void RenderTexture(int textureIdx, float left, float top, float width, float height, float depth)
-        { }
-
-        public void RenderTriangleFan(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
-        {
-            if (!_vertexPools.ContainsKey(vertexPoolIdx))
-            {
-                throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
-            }
-        }
-
-        public void RenderTriangleStrip(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
-        {
-            if (!_vertexPools.ContainsKey(vertexPoolIdx))
-            {
-                throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
-            }
-        }
-
-        public Texture TakeScreenshot()
-        {
-            return new Texture(256, 256, "screenshot.png");
-        }
-
-        private IGlRenderer _renderer;
 
         #region Event Handling
+
+        private IGlRenderer _renderer;
 
         /// <summary>
         /// Allocate GL resources or GL states.
@@ -188,57 +111,19 @@ namespace Eresys.Graphics.GL
                 Gl.DebugMessageControl(DebugSource.DontCare, DebugType.DontCare, DebugSeverity.DontCare, 0, null, true);
             }
 
-            // Allocate resources and/or setup GL states
-            switch (Gl.CurrentVersion.Api)
-            {
-                case KhronosVersion.ApiGl:
-                    {
-                        if (Gl.CurrentVersion >= Gl.Version_320)
-                        {
-                            _renderer = new Gl320Renderer();
-                        }
-                        else if (Gl.CurrentVersion >= Gl.Version_110)
-                        {
-                            _renderer = new Gl110Renderer();
-                        }
-                        else
-                        {
-                            _renderer = new Gl100Renderer();
-                        }
-                        break;
-                    }
-                case KhronosVersion.ApiGles2:
-                    {
-                        _renderer = new GlEs2Renderer();
-                        break;
-                    }
-            }
+            _renderer = _rendererFactory.Create(Gl.CurrentVersion);
 
             _renderer.Create();
+
+            ContextCreated?.Invoke(sender, e);
+
+            Gl.ClearColor(0.0f, 0.4f, 0.6f, 1.0f);
 
             // Uses multisampling, if available
             if (Gl.CurrentVersion != null && Gl.CurrentVersion.Api == KhronosVersion.ApiGl && glControl.MultisampleBits > 0)
             {
                 Gl.Enable(EnableCap.Multisample);
             }
-        }
-
-        private void RenderControl_Render(object sender, GlControlEventArgs e)
-        {
-            Gl.Viewport(0, 0, RenderControl.ClientSize.Width, RenderControl.ClientSize.Height);
-            Gl.Clear(ClearBufferMask.ColorBufferBit);
-
-            _renderer.Render();
-        }
-
-        private void RenderControl_ContextUpdate(object sender, GlControlEventArgs e)
-        {
-            _renderer.Update();
-        }
-
-        private void RenderControl_ContextDestroying(object sender, GlControlEventArgs e)
-        {
-            _renderer.Destroy();
         }
 
         private static void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam)
@@ -255,5 +140,61 @@ namespace Eresys.Graphics.GL
         }
 
         #endregion
+
+        public int AddFont(string name, float size, bool bold, bool italic)
+        {
+            return 0;
+        }
+
+        public int AddTexture(Texture texture)
+        {
+            return 0;
+        }
+
+        public int AddVertexPool(VertexPool vertexPool)
+        {
+            return _renderer.AddVertexPool(vertexPool);
+        }
+
+        public void RemoveVertexPool(int vertexPoolIdx)
+        {
+            _renderer.RemoveVertexPool(vertexPoolIdx);
+        }
+
+        public void BeginFrame()
+        {
+            Gl.Viewport(0, 0, RenderControl.ClientSize.Width, RenderControl.ClientSize.Height);
+            Gl.Clear(ClearBufferMask.ColorBufferBit);
+        }
+
+        public void Dispose()
+        { }
+
+        public void EndFrame()
+        { }
+
+        public void RemoveTexture(int textureIdx)
+        { }
+
+        public void RenderText(int fontIdx, Color color, Point2D position, string text)
+        { }
+
+        public void RenderTexture(int textureIdx, float left, float top, float width, float height, float depth)
+        { }
+
+        public void RenderTriangleFan(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
+        {
+            _renderer.RenderTriangleFan(WorldMatrix.ToFloatArray(), vertexPoolIdx, first, count, textureIdx, lightmapIdx);
+        }
+
+        public void RenderTriangleStrip(int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
+        {
+            _renderer.RenderTriangleStrip(WorldMatrix.ToFloatArray(), vertexPoolIdx, first, count, textureIdx, lightmapIdx);
+        }
+
+        public Texture TakeScreenshot()
+        {
+            return new Texture(256, 256, "screenshot.png");
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Eresys.Extra;
 using Eresys.Graphics.GL;
+using Eresys.Graphics.GL.Renderers;
 using Eresys.Math;
 using Eresys.Practises.Logging;
 using System;
@@ -53,7 +54,7 @@ namespace Eresys
                     kernel.Graphics = new DummyGraphics();// DXGraphics();
                     break;
                 case "opengl":
-                    kernel.Graphics = new GlGraphics();
+                    kernel.Graphics = new GlGraphics(new RendererFactory());
                     break;
                 default:
                     throw new Exception("Graphics renderer " + kernel.Settings["graphics"] + " invalid!");
