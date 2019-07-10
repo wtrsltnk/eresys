@@ -15,8 +15,8 @@ namespace Eresys.Extra
 
         public void LoadFromFile(string fileName, HlBspMap map, IGraphics graphics)
         {
-            map.BSPRendering = true;
-            map.FrustumCulling = true;
+            map.BSPRendering = false;
+            map.FrustumCulling = false;
             map.FileName = fileName;
             Load(map, graphics);
         }

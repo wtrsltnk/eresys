@@ -1,3 +1,5 @@
+using System;
+
 namespace Eresys.Math
 {
     /// <summary>
@@ -336,6 +338,38 @@ namespace Eresys.Math
             res.element[3, 3] = 0;
 
             return res;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <param name="bottom"></param>
+        /// <param name="top"></param>
+        /// <param name="near"></param>
+        /// <param name="far"></param>
+        /// <returns></returns>
+        public static Matrix OrthoRH(float left, float right, float bottom, float top, float near, float far)
+        {
+            if (System.Math.Abs(right - left) < float.Epsilon)
+                throw new ArgumentException("left/right planes are coincident");
+            if (System.Math.Abs(top - bottom) < float.Epsilon)
+                throw new ArgumentException("top/bottom planes are coincident");
+            if (System.Math.Abs(far - near) < float.Epsilon)
+                throw new ArgumentException("far/near planes are coincident");
+
+            var r = new Matrix();
+
+            r.element[0, 0] = 2.0f / (right - left);
+            r.element[1, 1] = 2.0f / (top - bottom);
+            r.element[2, 2] = -2.0f / (far - near);
+            r.element[3, 0] = -(right + left) / (right - left);
+            r.element[3, 1] = -(top + bottom) / (top - bottom);
+            r.element[3, 2] = -(far + near) / (far - near);
+            r.element[3, 3] = 1.0f;
+
+            return r;
         }
 
     }

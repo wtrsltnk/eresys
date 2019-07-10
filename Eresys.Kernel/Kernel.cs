@@ -82,7 +82,7 @@ namespace Eresys
             }
         }
 
-        public IProfiler Profiler { get; private set; } = null;
+        public IProfiler Profiler { get; set; } = null;
 
         private IApplication _app;
 
@@ -93,7 +93,7 @@ namespace Eresys
         /// <param name="logFileName">logbestand</param>
         /// <param name="iniFileName">inibestand</param>
         /// <returns></returns>
-        public int Startup(IApplication app, string logFileName)
+        public int Run(IApplication app, string logFileName)
         {
             _app = app;
 
@@ -144,7 +144,7 @@ namespace Eresys
             Profiler = new Profiler();
 
             // start application
-            _app.Startup(this);
+            _app.Startup();
 
             // start main loop
             Logger.Log(LogLevels.Info, "Entering Main Loop...");
@@ -169,7 +169,7 @@ namespace Eresys
             // update gamestate
             using (Profiler.StartSample("update app"))
             {
-                _app.Update(this);
+                _app.Update();
             }
 
             // update scene
@@ -201,7 +201,7 @@ namespace Eresys
 
                 using (Profiler.StartSample("render app"))
                 {
-                    _app.Render(this);
+                    _app.Render();
                 }
 
                 using (Profiler.StartSample("end frame"))

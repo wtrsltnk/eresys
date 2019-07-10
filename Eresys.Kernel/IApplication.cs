@@ -10,7 +10,7 @@ namespace Eresys
         /// <summary>
         /// Wordt aangeroepen wanneer de kernel opgestart is, voordat deze begint te lopen.
         /// </summary>
-        void Startup(Kernel kernel);
+        void Startup();
 
         /// <summary>
         /// Wordt aangeroepen wanneer de kernel normaal afgesloten wordt (om veiligheidsredenen kan dit niet wanneer de
@@ -29,12 +29,12 @@ namespace Eresys
         /// Wodrt opgeroepen wanneer de content van het spel moet worden ge-update. Hier kan bvb de status van verschillende
         /// toetsen worden nagegaan om dan aan de hand daarvan de scene aan te passen.
         /// </summary>
-        void Update(Kernel kernel);
+        void Update();
 
         /// <summary>
         /// Wordt aangeroepen wanneer de scene gerendert is. Op dit moment kunnen door de applicatie nog bepaalde zaken aan
         /// het zopas gerenderde frame worden toegevoegd.
         /// </summary>
-        void Render(Kernel kernel);
+        void Render();
     }
 }

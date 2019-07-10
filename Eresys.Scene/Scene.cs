@@ -1,24 +1,25 @@
 using Eresys.Practises.Logging;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Eresys
 {
     public class Scene
     {
-        private readonly ArrayList _objects;
+        private readonly List<SceneObject> _objects;
 
         public ILogger Logger { get; set; } = new ConsoleLogger();
 
         public Player player { get; set; }
 
-        public SceneObject this[int index] => (SceneObject)_objects[index];
+        public SceneObject this[int index] => _objects[index];
 
         public int Count => _objects.Count;
 
         public Scene()
         {
             Logger.Log(LogLevels.Info, "Initialising Scene...");
-            _objects = new ArrayList();
+            _objects = new List<SceneObject>();
             player = null;
         }
 
@@ -45,16 +46,17 @@ namespace Eresys
         public void Render(IGraphics graphics)
         {
             if (player == null) return;
-            for (int i = 0; i < _objects.Count; i++)
+            foreach (var obj in _objects)
             {
-                ((SceneObject)_objects[i]).Change();
+                obj.Change();
             }
             //Kernel.Graphics.Camera = player.Camera;
-            for (int i = 0; i < _objects.Count; i++)
+            foreach (var obj in _objects)
             {
-                SceneObject obj = ((SceneObject)(_objects[i]));
-                //Kernel.Graphics.WorldMatrix = obj.WorldMatrix;
-                if (obj.Visible) obj.Render(graphics, player.Camera);
+                if (obj.Visible)
+                {
+                    obj.Render(graphics, player.Camera);
+                }
             }
         }
 }

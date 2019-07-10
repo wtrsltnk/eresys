@@ -78,22 +78,25 @@ namespace Eresys.Graphics.GL.Renderers
             _vertexPools[vertexPoolIdx] = null;
         }
 
+        Matrix4x4f projection = Matrix4x4f.Ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, -1000.0f, 1000.0f);
+
         public void RenderTriangleFan(float[] matrix, int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
         {
             if (!_vertexPools.ContainsKey(vertexPoolIdx))
             {
                 throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
             }
-
+            
             // Select the program for drawing
             Gl.UseProgram(_Program.ProgramName);
             // Set uniform state
-            Gl.UniformMatrix4(_Program.LocationMVP, false, matrix);
+            //Gl.UniformMatrix4f(_Program.LocationMVP, 1, false, projection);
+            Gl.UniformMatrix4f(_Program.LocationMVP, 1, false, new Matrix4x4f(matrix));
             // Use the vertex array
             Gl.BindVertexArray(_vertexPools[vertexPoolIdx].ArrayName);
             // Draw triangle
             // Note: vertex attributes are streamed from GPU memory
-            Gl.DrawArrays(PrimitiveType.TriangleFan, 0, 3);
+            Gl.DrawArrays(PrimitiveType.TriangleFan, first, count);
         }
 
         public void RenderTriangleStrip(float[] matrix, int vertexPoolIdx, int first, int count, int textureIdx, int lightmapIdx)
@@ -102,6 +105,17 @@ namespace Eresys.Graphics.GL.Renderers
             {
                 throw new ArgumentException($"vertexpool {vertexPoolIdx} does not exist", nameof(vertexPoolIdx));
             }
+            
+            // Select the program for drawing
+            Gl.UseProgram(_Program.ProgramName);
+            // Set uniform state
+            //Gl.UniformMatrix4f(_Program.LocationMVP, 1, false, projection);
+            Gl.UniformMatrix4f(_Program.LocationMVP, 1, false, new Matrix4x4f(matrix));
+            // Use the vertex array
+            Gl.BindVertexArray(_vertexPools[vertexPoolIdx].ArrayName);
+            // Draw triangle
+            // Note: vertex attributes are streamed from GPU memory
+            Gl.DrawArrays(PrimitiveType.TriangleStrip, first, count);
         }
         #endregion
     }

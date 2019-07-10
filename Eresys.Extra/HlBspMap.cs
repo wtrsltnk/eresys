@@ -34,127 +34,137 @@ namespace Eresys
             bool visible;
             bool firstAlphaFace;
 
-            Profiler.StartSample("HLBSPMap.Render");
-
-            // create visible faces list
-            visFaces = new ArrayList();
-
-            // add faces to visible faces list
-            if (BSPRendering)
+            using (Profiler.StartSample("HLBSPMap.Render"))
             {
-                // get camera node
-                Profiler.StartSample("get camera leaf");
-                i = 0;
-                while (i >= 0)
-                {
-                    plane = Planes[Nodes[i].plane];
-                    d = plane.Distance(camera.Position);
-                    if (d >= 0.0f) i = Nodes[i].frontChild;
-                    else i = Nodes[i].backChild;
-                }
-                Profiler.StopSample();
+                // create visible faces list
+                visFaces = new ArrayList();
 
-                // get pvs for current leaf (~i => -(i + 1))
-                Profiler.StartSample("decompress pvs");
-                i = Leaves[~i].pvs;
-                pvs = DecompressPvs(i);
-                Profiler.StopSample();
-
-                // add visible faces
-                Profiler.StartSample("add visible faces");
-                for (i = 0; i < Leaves.Length; i++) // go through all leaves
+                // add faces to visible faces list
+                if (BSPRendering)
                 {
-                    visible = i == 0;
-                    if (!visible) visible = pvs[i - 1];
-                    if (visible) // if leaf is visible
+                    // get camera node
+                    using (Profiler.StartSample("get camera leaf"))
                     {
-                        for (j = 0; j < Leaves[i].numMarkFaces; j++) // go through all faces of leaf ..
+                        i = 0;
+                        while (i >= 0)
                         {
-                            face = Faces[MarkFaces[Leaves[i].firstMarkFace + j]];
-                            if (face.texture < 0) continue;
-                            if (face.model) continue;
-                            visFaces.Add(face); // .. and add them
+                            plane = Planes[Nodes[i].plane];
+                            d = plane.Distance(camera.Position);
+                            if (d >= 0.0f) i = Nodes[i].frontChild;
+                            else i = Nodes[i].backChild;
                         }
                     }
-                }
-                Profiler.StopSample();
 
-                // add all model faces
-                Profiler.StartSample("add model faces");
-                visFaces.AddRange(ModelFaces);
-                Profiler.StopSample();
-            }
-            else
-            {
-                Profiler.StartSample("add all faces");
-                for (i = 0; i < Faces.Length; i++)
-                {
-                    face = Faces[i];
-                    if (face.texture < 0) continue;
-                    visFaces.Add(face);
-                }
-                Profiler.StopSample();
-            }
-
-            // perform frustum culling on visible faces
-            if (FrustumCulling)
-            {
-                Profiler.StartSample("frustum culling");
-                for (i = visFaces.Count - 1; i >= 0; i--)
-                {
-                    face = (BspFace)visFaces[i];
-                    if (!camera.InsideFrustum(face.center, face.radius)) visFaces.RemoveAt(i);
-                }
-                Profiler.StopSample();
-            }
-
-            // update camera distance of visible faces
-            Profiler.StartSample("update face distance");
-            for (i = 0; i < visFaces.Count; i++) ((BspFace)visFaces[i]).UpdateCamDist(camera);
-            Profiler.StopSample();
-
-            // sort visible faces
-            Profiler.StartSample("sort faces");
-            visFaces.Sort();
-            Profiler.StopSample();
-
-            // render visible faces + sky somewher ebetween the transparant and the solid faces
-            Profiler.StartSample("render faces");
-            firstAlphaFace = false;
-            for (i = 0; i < visFaces.Count; i++)
-            {
-                face = (BspFace)visFaces[i];
-                if (face.IsTransparant())
-                {
-                    if (!firstAlphaFace && Sky != null)
+                    // get pvs for current leaf (~i => -(i + 1))
+                    using (Profiler.StartSample("decompress pvs"))
                     {
-                        // render skybox
-                        Profiler.StartSample("render sky");
-                        Sky.Render(graphics, camera);
-                        Profiler.StopSample();
-                        firstAlphaFace = true;
+                        i = Leaves[~i].pvs;
+                        pvs = DecompressPvs(i);
                     }
-                    graphics.AlphaBlending = true;
-                    graphics.Alpha = face.alpha;
-                    graphics.TextureAlpha = face.textureAlpha;
+
+                    // add visible faces
+                    using (Profiler.StartSample("add visible faces"))
+                    {
+                        for (i = 0; i < Leaves.Length; i++) // go through all leaves
+                        {
+                            visible = i == 0;
+                            if (!visible) visible = pvs[i - 1];
+                            if (visible) // if leaf is visible
+                            {
+                                for (j = 0; j < Leaves[i].numMarkFaces; j++) // go through all faces of leaf ..
+                                {
+                                    face = Faces[MarkFaces[Leaves[i].firstMarkFace + j]];
+                                    if (face.texture < 0) continue;
+                                    if (face.model) continue;
+                                    visFaces.Add(face); // .. and add them
+                                }
+                            }
+                        }
+                    }
+
+                    // add all model faces
+                    using (Profiler.StartSample("add model faces"))
+                    {
+                        visFaces.AddRange(ModelFaces);
+                    }
                 }
                 else
                 {
-                    graphics.AlphaBlending = false;
+                    using (Profiler.StartSample("add all faces"))
+                    {
+                        for (i = 0; i < Faces.Length; i++)
+                        {
+                            face = Faces[i];
+                            if (face.texture < 0) continue;
+                            visFaces.Add(face);
+                        }
+                    }
                 }
-                graphics.Lighting = face.lightmap >= 0;
-                graphics.RenderTriangleFan(VertexPoolIndex, face.firstVertex, face.numVertices, face.texture, face.lightmap);
-            }
-            if (!firstAlphaFace && Sky != null)
-            {
-                // render skybox
-                Profiler.StartSample("render sky");
-                Sky.Render(graphics, camera);
-                Profiler.StopSample();
-            }
-            Profiler.StopSample();
 
-            Profiler.StopSample();
+                // perform frustum culling on visible faces
+                if (FrustumCulling)
+                {
+                    using (Profiler.StartSample("frustum culling"))
+                    {
+                        for (i = visFaces.Count - 1; i >= 0; i--)
+                        {
+                            face = (BspFace)visFaces[i];
+                            if (!camera.InsideFrustum(face.center, face.radius)) visFaces.RemoveAt(i);
+                        }
+                    }
+                }
+
+                // update camera distance of visible faces
+                using (Profiler.StartSample("update face distance"))
+                {
+                    for (i = 0; i < visFaces.Count; i++) ((BspFace)visFaces[i]).UpdateCamDist(camera);
+                }
+
+                // sort visible faces
+                using (Profiler.StartSample("sort faces"))
+                {
+                    visFaces.Sort();
+                }
+
+                // render visible faces + sky somewher ebetween the transparant and the solid faces
+                using (Profiler.StartSample("render faces"))
+                {
+                    firstAlphaFace = false;
+                    for (i = 0; i < visFaces.Count; i++)
+                    {
+                        face = (BspFace)visFaces[i];
+                        if (face.IsTransparant())
+                        {
+                            if (!firstAlphaFace && Sky != null)
+                            {
+                                // render skybox
+                                using (Profiler.StartSample("render sky"))
+                                {
+                                    Sky.Render(graphics, camera);
+                                }
+                                firstAlphaFace = true;
+                            }
+                            graphics.AlphaBlending = true;
+                            graphics.Alpha = face.alpha;
+                            graphics.TextureAlpha = face.textureAlpha;
+                        }
+                        else
+                        {
+                            graphics.AlphaBlending = false;
+                        }
+                        graphics.Lighting = face.lightmap >= 0;
+                        graphics.RenderTriangleFan(VertexPoolIndex, face.firstVertex, face.numVertices, face.texture, face.lightmap);
+                    }
+                    if (!firstAlphaFace && Sky != null)
+                    {
+                        // render skybox
+                        using (Profiler.StartSample("render sky"))
+                        {
+                            Sky.Render(graphics, camera);
+                        }
+                    }
+                }
+            }
         }
 
         private bool[] DecompressPvs(int offset)
@@ -404,7 +414,7 @@ namespace Eresys
                 Collision collision = null;
                 //for(int i = 0; i < faces.Length; i ++) collision = ClosestCollision(collision, CheckFace(i, start, movement, 0.0f, 1.0f, sphere));
                 collision = CheckNode(0, start, movement, 0.0f, 1.0f, sphere);
-                for (int i = 0; i < ModelFaces.Count; i++) collision = ClosestCollision(collision, CheckFace(((BspFace)ModelFaces[i]).index, start, movement, 0.0f, 1.0f, sphere));
+                for (int i = 0; i < ModelFaces.Count; i++) collision = ClosestCollision(collision, CheckFace(ModelFaces[i].index, start, movement, 0.0f, 1.0f, sphere));
 
                 if (collision == null) break;
                 if (collision.fraction == 1.0f) break;
@@ -615,8 +625,8 @@ namespace Eresys
 
         #region BspData
 
-        private static float collisionMargin = 1.0f / 32.0f;
-        private static int maxCollisions = 100;
+        private static readonly float collisionMargin = 1.0f / 32.0f;
+        private static readonly int maxCollisions = 100;
 
         public string FileName { get; set; }            // name of the bsp file
 

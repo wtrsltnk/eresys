@@ -77,14 +77,21 @@ namespace Eresys.Graphics.GL
             RenderControl.ContextDestroying += (sender, e) => ContextDestroying?.Invoke(sender, e);
             RenderControl.Render += (sender, e) => Render?.Invoke(sender, e);
             RenderControl.ContextUpdate += (sender, e) => Update?.Invoke(sender, e);
+            RenderControl.SizeChanged += RenderControl_SizeChanged;
 
             Form.Controls.Add(RenderControl);
             Form.ResumeLayout(false);
 
             Form.Show();
 
-            //WorldMatrix = Matrix.PerspectiveFovLH(90.0f, 1.0f, 0.1f, 1000.0f);
-            WorldMatrix = Matrix.Translation(0, 0, 0);
+            WorldMatrix = Matrix.OrthoRH(-1000.0f, 1000.0f, -1000.0f, 1000.0f, -1000.0f, 1000.0f);
+            //WorldMatrix = Matrix.Translation(0, 0, 0);
+        }
+
+        private void RenderControl_SizeChanged(object sender, EventArgs e)
+        {
+            var aspect = (float)RenderControl.Width / (float)RenderControl.Height;
+            WorldMatrix = Matrix.OrthoRH(-1000.0f * aspect, 1000.0f * aspect, -1000.0f, 1000.0f, -1000.0f, 1000.0f);
         }
 
         #region Event Handling
